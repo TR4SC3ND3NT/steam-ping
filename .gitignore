@@ -1,0 +1,34 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env
+.env
+.env.*
+
+# Builds
+dist/
+build/
+coverage/
+
+# Vite
+.vite/
+
+# Docker
+*.log
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Frontend / Backend отдельно
+frontend/node_modules/
+backend/node_modules/
+
+# Package locks (оставляем!)
+!package-lock.json
+!frontend/package-lock.json
+!backend/package-lock.json
