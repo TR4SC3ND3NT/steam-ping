@@ -12,8 +12,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm ci --only=production
-
+RUN npm install --omit=dev
 # Copy source
 COPY . .
 
@@ -25,9 +24,6 @@ ENV PORT=3001
 EXPOSE 3001
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3001/health || exit 1
-
 # Run as non-root (but ping needs capabilities)
 # Note: For ICMP ping to work, container needs NET_RAW capability
 
