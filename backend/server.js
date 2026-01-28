@@ -490,8 +490,8 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log('╔═══════════════════════════════════════════════════╗');
   console.log('║     🎮 CS2 PING CHECKER - BACKEND v3.0            ║');
   console.log('╠═══════════════════════════════════════════════════╣');
-  console.log(`║  HTTP Server: http://localhost:${PORT}                 ║`);
-  console.log(`║  WebSocket:   ws://localhost:${PORT}/ws                ║`);
+  console.log(`║  HTTP Server: http://0.0.0.0:${PORT}                    ║`);
+  console.log(`║  WebSocket:   ws://0.0.0.0:${PORT}/ws                   ║`);
   console.log(`║  Servers:     ${CS2_SERVERS.length} CS2/Valve servers              ║`);
   console.log(`║  Concurrency: ${CONCURRENCY_LIMIT} parallel probes               ║`);
   console.log('╠═══════════════════════════════════════════════════╣');
@@ -507,4 +507,22 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log('║  Blocked servers show time: null                  ║');
   console.log('╚═══════════════════════════════════════════════════╝');
   console.log('\n');
+});
+
+// ============================================
+// GRACEFUL SHUTDOWN (for Railway/Docker)
+// ============================================
+process.on('SIGTERM', () => {
+  console.log('🛑 SIGTERM received, shutting down gracefully...');
+  server.close(() => {
+    console.log('👋 Server closed');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('🛑 SIGINT received, shutting down...');
+  server.close(() => {
+    process.exit(0);
+  });
 });
